@@ -12,7 +12,7 @@ export default function Home() {
   };
 
   return (
-    <main className="w-full p-4 md:p-8 lg:p-16">
+    <main className="w-full lg:w-2/5 p-4 md:p-8 lg:p-16">
       <div role="tablist" className="tabs tabs-lifted">
         <input
           type="radio"

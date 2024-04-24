@@ -1,14 +1,16 @@
-import { eisRates } from "@/data/eisRates";
+import { calculateEIS } from "@/utils/calculateEis";
+import { calculateEPF } from "@/utils/calculateEpf";
+import { calculatePcb } from "@/utils/calculatePcb";
+import { calculateSOCSO } from "@/utils/calculateSocso";
 import React, { useState } from "react";
-import { socsoRates } from "../../data/socsoRates";
 
-type IncomeCategory = {
+export type IncomeCategory = {
   salary?: number;
   allowance?: number;
   bonus?: number;
 };
 
-type DeductionsCategory = {
+export type DeductionsCategory = {
   epfRate?: number;
   epfContribution?: number;
   socso?: number;
@@ -17,67 +19,28 @@ type DeductionsCategory = {
 };
 
 const Income = () => {
+  const defaultIncome = {
+    salary: 0,
+    allowance: 0,
+    bonus: 0,
+  };
   const defaultDeductions = {
     epfRate: 11,
   };
 
-  const [income, setIncome] = useState<IncomeCategory>();
+  const [income, setIncome] = useState<IncomeCategory>(defaultIncome);
   const [showAllowance, setShowAllowance] = useState<boolean>(false);
   const [showBonus, setShowBonus] = useState<boolean>(false);
   const [deductions, setDeductions] =
     useState<DeductionsCategory>(defaultDeductions);
 
-  const handleCalculateSOCSO = (wage: number) => {
-    let socso = 0;
-
-    for (const category of socsoRates) {
-      if (wage >= category.min && wage <= category.max) {
-        socso = category.employee;
-        break;
-      }
-    }
-    return socso;
-  };
-
-  const handleCalculateEIS = (wage: number) => {
-    let eis = 0;
-
-    for (const category of eisRates) {
-      if (wage >= category.min && wage <= category.max) {
-        eis = category.employee;
-        break;
-      }
-    }
-    return eis;
-  };
-
-  const handleCalculateMTD = () => {
-    return 0;
-  };
-
-  const handleCalculateEPF = (salary: number) => {
-    if (deductions?.epfRate) {
-      const epfContribution = (salary * deductions.epfRate) / 100;
-      const formattedEPF = new Intl.NumberFormat("en-MY", {
-        maximumFractionDigits: 2,
-      }).format(epfContribution);
-      setDeductions({ ...deductions, epfContribution: Number(formattedEPF) });
-      return Number(formattedEPF);
-    }
-    return 0;
-  };
-
   const handleCalculateDeductions = () => {
-    const salary = income?.salary ?? 0;
-    const bonus = income?.bonus ?? 0;
-    // ref for epf
-    // https://www.kwsp.gov.my/employer/responsibilities/option-contribute
-    const epfContribution = handleCalculateEPF(salary);
-    // ref for socso & eis
-    // https://www.perkeso.gov.my/uncategorised/184-our-services/800-contribution-rate.html
-    const socso = handleCalculateSOCSO(salary + bonus);
-    const eis = handleCalculateEIS(salary + bonus);
-    const mtd = handleCalculateMTD();
+    const salary = income.salary ?? 0;
+    const epfRate = deductions.epfRate ?? 0;
+    const epfContribution = calculateEPF(salary, epfRate);
+    const socso = calculateSOCSO(salary);
+    const eis = calculateEIS(salary);
+    const mtd = calculatePcb(salary);
 
     setDeductions({ ...deductions, epfContribution, socso, eis, mtd });
   };
@@ -134,7 +97,7 @@ const Income = () => {
     setIncome({ ...income, bonus: 0 });
   };
 
-  console.log(income, deductions);
+  // console.log(income, deductions);
 
   return (
     <div className="w-100">
