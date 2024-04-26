@@ -1,30 +1,47 @@
 import { pcbRates } from "@/data/pcbRates";
 
-export const calculateChargeableIncome = (income: number): number => {
+export const calculateTaxableIncome = (
+  income: number,
+  hasPartner: boolean,
+  children: number
+): number => {
   const potonganIndividu = 9000;
   const potonganKWSP = 4000;
-
+  const potonganPasangan = 4000;
+  const potonganAnak = 2000;
   const annualSalary = income * 12;
+  let taxableIncome = 0;
 
-  // if (bonus === 0) {
-  const taxableIncome = annualSalary - potonganIndividu - potonganKWSP;
+  if (!hasPartner && children === 0) {
+    taxableIncome = annualSalary - potonganIndividu - potonganKWSP;
+  }
+  if (!hasPartner && children > 0) {
+    taxableIncome =
+      annualSalary - potonganIndividu - potonganKWSP - potonganAnak * children;
+  }
+  if (hasPartner && children === 0) {
+    taxableIncome =
+      annualSalary - potonganIndividu - potonganKWSP - potonganPasangan;
+  }
+  if (hasPartner && children > 0) {
+    taxableIncome =
+      annualSalary -
+      potonganIndividu -
+      potonganKWSP -
+      potonganPasangan -
+      potonganAnak * children;
+  }
 
   return taxableIncome;
-  // }
-  // return 0;
-  // else {
-  //   const epfChargedOnBonus = calculateEPF(bonus, epfRate);
-  //   const socsoChargedOnBonus = calculateSOCSO(bonus);
-  //   const eisChargedOnBonus = calculateEIS(bonus);
-
-  //   const bonusAfterDeductions =
-  //     bonus - epfChargedOnBonus - socsoChargedOnBonus - eisChargedOnBonus;
-  // }
 };
 
-export const calculatePcb = (income: number): number => {
+export const calculatePcb = (
+  income: number,
+  hasPartner: boolean,
+  children: number
+): number => {
   let pcb = 0;
-  const chargeableIncome = calculateChargeableIncome(income);
+  const chargeableIncome = calculateTaxableIncome(income, hasPartner, children);
 
   for (const tier of pcbRates) {
     if (
