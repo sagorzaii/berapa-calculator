@@ -53,5 +53,11 @@ export const calculatePcb = (
         tier.charge;
     }
   }
-  return pcb / 12;
+  const pcbPerMonth = Number(
+    new Intl.NumberFormat("en-MY", {
+      style: "decimal",
+      maximumFractionDigits: 2,
+    }).format(pcb / 12)
+  );
+  return pcbPerMonth;
 };

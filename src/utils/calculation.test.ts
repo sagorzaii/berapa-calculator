@@ -32,7 +32,10 @@ describe("pcb for single, no children", () => {
     );
   });
   it("pcb for single", () => {
-    expect(calculatePcb(4200, false, 0)).toBe(62);
+    expect(calculatePcb(4000, false, 0)).toBe(16.67);
+  });
+  it("pcb for single", () => {
+    expect(calculatePcb(5000, false, 0)).toBe(110);
   });
 });
 

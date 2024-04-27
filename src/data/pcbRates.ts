@@ -6,14 +6,14 @@ export const pcbRates = [
     minIncomeRange: 5001,
     maxIncomeRange: 20000,
     firstChargeableIncome: 5000,
-    charge: 0,
+    charge: -400,
     rate: 1,
   },
   {
     minIncomeRange: 20001,
     maxIncomeRange: 35000,
     firstChargeableIncome: 20000,
-    charge: 0,
+    charge: -250,
     rate: 3,
   },
   {
