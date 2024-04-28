@@ -90,3 +90,12 @@ describe("pcb for single with partner, 2 child", () => {
     expect(calculatePcb(5000, true, 2)).toBe(70);
   });
 });
+
+describe("pcb for foreign worker", () => {
+  it("taxable income for foreign worker", () => {
+    expect(calculateTaxableIncome(5000, false, 0)).toBe(5000 * 12);
+  });
+  it("pcb for foreign worker", () => {
+    expect(calculatePcb(5000, false, 0)).toBe(150);
+  });
+});

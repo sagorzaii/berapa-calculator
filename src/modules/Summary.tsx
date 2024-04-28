@@ -4,42 +4,114 @@ export type SummaryProps = {
   eis: number;
   mtd: number;
   monthlySalary: number;
-  bonus: number;
-  allowance: number;
+  bonus?: number;
+  allowance?: number;
 };
 
-const Summary = () => {
+const Summary = (props: SummaryProps) => {
+  const { epf, socso, eis, mtd, monthlySalary } = props;
   return (
-    <div className="w-full p-4 bg-white shadow-md rounded">
-      <p className="mb-3 font-bold text-slate-400">Deductions</p>
+    <div className="w-full p-2 md:p-4 lg:p-8 bg-white shadow-md rounded">
+      <div className="relative overflow-x-auto">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Deductions
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Ringgit (RM)
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                className="px-6 py-4 font-normal text-slate-400 whitespace-nowrap dark:text-white"
+              >
+                <span className="flex gap-1 items-center">
+                  <img
+                    className="w-10 h-10 object-cover"
+                    src="/kwsp.png"
+                    alt=""
+                  />
+                  Employee Provident Fund (EPF / KWSP)
+                </span>
+              </th>
+              <td className="px-6 py-4">{epf}</td>
+            </tr>
 
-      <ul>
-        <li className="flex items-center justify-between">
-          <span className="text-sm text-slate-400">EPF</span>
-          <span className="font-bold">100</span>
-        </li>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                className="px-6 py-4 font-normal text-slate-400 whitespace-nowrap dark:text-white"
+              >
+                <span className="flex gap-1 items-center">
+                  <img
+                    className="w-10 h-10 object-contain"
+                    src="/perkeso.png"
+                    alt=""
+                  />
+                  Social Security Organisation (SOCSO / PERKESO)
+                </span>
+              </th>
+              <td className="px-6 py-4">{socso}</td>
+            </tr>
 
-        <li className="flex items-center justify-between">
-          <span className="text-sm text-slate-400">SOCSO</span>
-          <span className="font-bold">100</span>
-        </li>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                className="px-6 py-4 font-normal text-slate-400 whitespace-nowrap dark:text-white"
+              >
+                <span className="flex gap-1 items-center">
+                  <img
+                    className="w-10 h-10 object-contain"
+                    src="/eis.png"
+                    alt=""
+                  />
+                  Employment Insurance System (EIS)
+                </span>
+              </th>
+              <td className="px-6 py-4">{eis}</td>
+            </tr>
 
-        <li className="flex items-center justify-between">
-          <span className="text-sm text-slate-400">EIS</span>
-          <span className="font-bold">100</span>
-        </li>
+            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th
+                scope="row"
+                className="px-6 py-4 font-normal text-slate-400 whitespace-nowrap dark:text-white"
+              >
+                <span className="flex gap-1 items-center">
+                  <img
+                    className="w-10 h-10 object-contain"
+                    src="/lhdn.png"
+                    alt=""
+                  />
+                  Monthly Tax Deduction (MTD / PCB)
+                </span>
+              </th>
+              <td className="px-6 py-4">{mtd}</td>
+            </tr>
+          </tbody>
 
-        <li className="flex items-center justify-between">
-          <span className="text-sm text-slate-400">MTD / PCB</span>
-          <span className="font-bold">100</span>
-        </li>
-      </ul>
+          <tfoot>
+            <tr className="font-semibold dark:text-white border-b">
+              <th scope="row" className="px-6 py-3 text-md">
+                Total Deductions
+              </th>
+              <td className="px-6 py-3 text-red-500">
+                {new Intl.NumberFormat("en-MY").format(epf + eis + socso + mtd)}
+              </td>
+            </tr>
 
-      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700"></hr>
-
-      <div className="flex items-center justify-between">
-        <span className="text-sm text-slate-400">Net Salary</span>
-        <span className="font-bold">1000</span>
+            <tr className="font-bold dark:text-white">
+              <th scope="row" className="px-6 py-3 text-md">
+                Net Salary
+              </th>
+              <td className="px-6 py-3 text-teal-400">{monthlySalary}</td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
     </div>
   );

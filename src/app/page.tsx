@@ -1,9 +1,47 @@
 "use client";
 
-import Salary from "@/modules/Salary";
-import Summary from "@/modules/Summary";
+import Salary, { UserProps } from "@/modules/Salary";
+import Summary, { SummaryProps } from "@/modules/Summary";
+import { calculateEIS } from "@/utils/calculateEis";
+import { calculateEPF } from "@/utils/calculateEpf";
+import { calculatePcb } from "@/utils/calculatePcb";
+import { calculateSOCSO } from "@/utils/calculateSocso";
+import { useState } from "react";
 
 export default function Home() {
+  const defaultSummary: SummaryProps = {
+    epf: 0,
+    socso: 0,
+    eis: 0,
+    mtd: 0,
+    monthlySalary: 0,
+    bonus: 0,
+    allowance: 0,
+  };
+  const [summaries, setSummaries] = useState<SummaryProps>(defaultSummary);
+
+  const handleCalculate = (user: UserProps) => {
+    const epf = calculateEPF(user.salary, user.epfContribution);
+    const socso = calculateSOCSO(user.salary);
+    const eis = calculateEIS(user.salary);
+    const mtd = calculatePcb(user.salary, user.haveSpouse, 0);
+    const netSalary = Number(
+      new Intl.NumberFormat("en-MY", {
+        style: "decimal",
+      }).format(user.salary - epf - socso - eis - mtd)
+    );
+
+    setSummaries({
+      epf,
+      socso,
+      eis,
+      mtd,
+      monthlySalary: netSalary,
+      bonus: user?.bonus,
+      allowance: user?.allowance,
+    });
+  };
+
   return (
     <main className="w-full h-full bg-teal-50 overflow-auto">
       <div className="w-full max-w-3xl mx-auto p-4 flex flex-col gap-8">
@@ -16,8 +54,14 @@ export default function Home() {
           </span>
         </h1>
 
-        <Salary />
-        <Summary />
+        <Salary onCalculate={handleCalculate} />
+        <Summary
+          epf={summaries.epf}
+          socso={summaries.socso}
+          eis={summaries.eis}
+          mtd={summaries.mtd}
+          monthlySalary={summaries.monthlySalary}
+        />
       </div>
     </main>
   );
