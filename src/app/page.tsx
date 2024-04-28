@@ -2,10 +2,7 @@
 
 import Salary, { UserProps } from "@/modules/Salary";
 import Summary, { SummaryProps } from "@/modules/Summary";
-import { calculateEIS } from "@/utils/calculateEis";
-import { calculateEPF } from "@/utils/calculateEpf";
-import { calculatePcb } from "@/utils/calculatePcb";
-import { calculateSOCSO } from "@/utils/calculateSocso";
+import { calculateNonResident, calculateResident } from "@/utils/calculateAll";
 import { useState } from "react";
 
 export default function Home() {
@@ -14,32 +11,39 @@ export default function Home() {
     socso: 0,
     eis: 0,
     mtd: 0,
-    monthlySalary: 0,
+    netSalary: 0,
     bonus: 0,
     allowance: 0,
   };
   const [summaries, setSummaries] = useState<SummaryProps>(defaultSummary);
 
   const handleCalculate = (user: UserProps) => {
-    const epf = calculateEPF(user.salary, user.epfContribution);
-    const socso = calculateSOCSO(user.salary);
-    const eis = calculateEIS(user.salary);
-    const mtd = calculatePcb(user.salary, user.haveSpouse, 0);
-    const netSalary = Number(
-      new Intl.NumberFormat("en-MY", {
-        style: "decimal",
-      }).format(user.salary - epf - socso - eis - mtd)
-    );
+    if (!user.taxResident) {
+      const { epf, socso, eis, mtd, netSalary } = calculateNonResident(user);
 
-    setSummaries({
-      epf,
-      socso,
-      eis,
-      mtd,
-      monthlySalary: netSalary,
-      bonus: user?.bonus,
-      allowance: user?.allowance,
-    });
+      setSummaries({
+        ...summaries,
+        epf,
+        socso,
+        eis,
+        mtd,
+        netSalary,
+        bonus: user?.bonus,
+        allowance: user?.allowance,
+      });
+    } else {
+      const { epf, socso, eis, mtd, netSalary } = calculateResident(user);
+      setSummaries({
+        ...summaries,
+        epf,
+        socso,
+        eis,
+        mtd,
+        netSalary,
+        bonus: user?.bonus,
+        allowance: user?.allowance,
+      });
+    }
   };
 
   return (
@@ -47,10 +51,10 @@ export default function Home() {
       <div className="w-full max-w-3xl mx-auto p-4 flex flex-col gap-8">
         <h1 className="text-3xl font-extrabold text-gray-900 dark:text-white md:text-4xl lg:text-5xl drop-shadow-xl">
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-sky-400">
-            Tax Calculation
+            brp?
           </span>{" "}
           <span className="underline underline-offset-3 decoration-8 decoration-green-600 dark:decoration-green-800">
-            Made Easy.
+            tax made easy.
           </span>
         </h1>
 
@@ -60,7 +64,7 @@ export default function Home() {
           socso={summaries.socso}
           eis={summaries.eis}
           mtd={summaries.mtd}
-          monthlySalary={summaries.monthlySalary}
+          netSalary={summaries.netSalary}
         />
       </div>
     </main>

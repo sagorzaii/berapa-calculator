@@ -3,13 +3,13 @@ export type SummaryProps = {
   socso: number;
   eis: number;
   mtd: number;
-  monthlySalary: number;
+  netSalary: number;
   bonus?: number;
   allowance?: number;
 };
 
 const Summary = (props: SummaryProps) => {
-  const { epf, socso, eis, mtd, monthlySalary } = props;
+  const { epf, socso, eis, mtd, netSalary } = props;
   return (
     <div className="w-full p-2 md:p-4 lg:p-8 bg-white shadow-md rounded">
       <div className="relative overflow-x-auto">
@@ -108,7 +108,7 @@ const Summary = (props: SummaryProps) => {
               <th scope="row" className="px-6 py-3 text-md">
                 Net Salary
               </th>
-              <td className="px-6 py-3 text-teal-400">{monthlySalary}</td>
+              <td className="px-6 py-3 text-teal-400">{netSalary}</td>
             </tr>
           </tfoot>
         </table>

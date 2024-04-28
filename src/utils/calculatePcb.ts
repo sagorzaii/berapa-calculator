@@ -1,6 +1,7 @@
 import { pcbRates } from "@/data/pcbRates";
 
 export const calculateTaxableIncome = (
+  isResident: boolean,
   income: number,
   hasPartner: boolean,
   children: number
@@ -11,6 +12,10 @@ export const calculateTaxableIncome = (
   const potonganAnak = 2000;
   const annualSalary = income * 12;
   let taxableIncome = 0;
+
+  if (!isResident) {
+    return annualSalary;
+  }
 
   if (!hasPartner && children === 0) {
     taxableIncome = annualSalary - potonganIndividu - potonganKWSP;
@@ -36,12 +41,22 @@ export const calculateTaxableIncome = (
 };
 
 export const calculatePcb = (
+  isResident: boolean,
   income: number,
   hasPartner: boolean,
   children: number
 ): number => {
   let pcb = 0;
-  const chargeableIncome = calculateTaxableIncome(income, hasPartner, children);
+  const chargeableIncome = calculateTaxableIncome(
+    isResident,
+    income,
+    hasPartner,
+    children
+  );
+
+  if (!isResident) {
+    return (chargeableIncome * 0.03) / 12;
+  }
 
   for (const tier of pcbRates) {
     if (

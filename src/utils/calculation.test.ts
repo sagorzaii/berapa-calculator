@@ -27,43 +27,43 @@ it("eis should be accurate", () => {
 
 describe("pcb for single, no children", () => {
   it("taxable income for single", () => {
-    expect(calculateTaxableIncome(4000, false, 0)).toBe(
+    expect(calculateTaxableIncome(true, 4000, false, 0)).toBe(
       4000 * 12 - potonganKWSP - potonganIndividu
     );
   });
   it("pcb for single", () => {
-    expect(calculatePcb(4000, false, 0)).toBe(16.67);
+    expect(calculatePcb(true, 4000, false, 0)).toBe(16.67);
   });
   it("pcb for single", () => {
-    expect(calculatePcb(5000, false, 0)).toBe(110);
+    expect(calculatePcb(true, 5000, false, 0)).toBe(110);
   });
 });
 
 describe("pcb for single with 1 child", () => {
   it("taxable income for single with 1 child", () => {
-    expect(calculateTaxableIncome(5000, false, 1)).toBe(
+    expect(calculateTaxableIncome(true, 5000, false, 1)).toBe(
       5000 * 12 - potonganKWSP - potonganIndividu - potonganAnak
     );
   });
   it("pcb for single with 1 child", () => {
-    expect(calculatePcb(5000, false, 1)).toBe(100);
+    expect(calculatePcb(true, 5000, false, 1)).toBe(100);
   });
 });
 
 describe("pcb for single with partner, no children", () => {
   it("taxable income for single with partner, no children", () => {
-    expect(calculateTaxableIncome(5000, true, 0)).toBe(
+    expect(calculateTaxableIncome(true, 5000, true, 0)).toBe(
       5000 * 12 - potonganKWSP - potonganIndividu - potonganPasangan
     );
   });
   it("pcb for single with partner, no children", () => {
-    expect(calculatePcb(5000, true, 0)).toBe(90);
+    expect(calculatePcb(true, 5000, true, 0)).toBe(90);
   });
 });
 
 describe("pcb for single with partner, 1 child", () => {
   it("taxable income for single with partner, 1 child", () => {
-    expect(calculateTaxableIncome(5000, true, 1)).toBe(
+    expect(calculateTaxableIncome(true, 5000, true, 1)).toBe(
       5000 * 12 -
         potonganKWSP -
         potonganIndividu -
@@ -72,13 +72,13 @@ describe("pcb for single with partner, 1 child", () => {
     );
   });
   it("pcb for single with partner, 1 child", () => {
-    expect(calculatePcb(5000, true, 1)).toBe(80);
+    expect(calculatePcb(true, 5000, true, 1)).toBe(80);
   });
 });
 
 describe("pcb for single with partner, 2 child", () => {
   it("taxable income for single with partner, 2 child", () => {
-    expect(calculateTaxableIncome(5000, true, 2)).toBe(
+    expect(calculateTaxableIncome(true, 5000, true, 2)).toBe(
       5000 * 12 -
         potonganKWSP -
         potonganIndividu -
@@ -87,15 +87,15 @@ describe("pcb for single with partner, 2 child", () => {
     );
   });
   it("pcb for single with partner, 2 child", () => {
-    expect(calculatePcb(5000, true, 2)).toBe(70);
+    expect(calculatePcb(true, 5000, true, 2)).toBe(70);
   });
 });
 
 describe("pcb for foreign worker", () => {
   it("taxable income for foreign worker", () => {
-    expect(calculateTaxableIncome(5000, false, 0)).toBe(5000 * 12);
+    expect(calculateTaxableIncome(false, 5000, false, 0)).toBe(5000 * 12);
   });
   it("pcb for foreign worker", () => {
-    expect(calculatePcb(5000, false, 0)).toBe(150);
+    expect(calculatePcb(false, 5000, false, 0)).toBe(150);
   });
 });
