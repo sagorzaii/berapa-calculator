@@ -1,6 +1,16 @@
+export type SummaryProps = {
+  epf: number;
+  socso: number;
+  eis: number;
+  mtd: number;
+  monthlySalary: number;
+  bonus: number;
+  allowance: number;
+};
+
 const Summary = () => {
   return (
-    <div className="w-full mt-8 p-4 bg-white shadow-md rounded">
+    <div className="w-full p-4 bg-white shadow-md rounded">
       <p className="mb-3 font-bold text-slate-400">Deductions</p>
 
       <ul>
