@@ -33,7 +33,7 @@ const Summary = (props: SummaryProps) => {
                 <span className="flex gap-1 items-center">
                   <img
                     className="w-10 h-10 object-cover"
-                    src="/kwsp.png"
+                    src="/berapa-calculator/kwsp.png"
                     alt=""
                   />
                   Employee Provident Fund (EPF / KWSP)
@@ -50,7 +50,7 @@ const Summary = (props: SummaryProps) => {
                 <span className="flex gap-1 items-center">
                   <img
                     className="w-10 h-10 object-contain"
-                    src="/perkeso.png"
+                    src="/berapa-calculator/perkeso.png"
                     alt=""
                   />
                   Social Security Organisation (SOCSO / PERKESO)
@@ -67,7 +67,7 @@ const Summary = (props: SummaryProps) => {
                 <span className="flex gap-1 items-center">
                   <img
                     className="w-10 h-10 object-contain"
-                    src="/eis.png"
+                    src="/berapa-calculator/eis.png"
                     alt=""
                   />
                   Employment Insurance System (EIS)
@@ -84,7 +84,7 @@ const Summary = (props: SummaryProps) => {
                 <span className="flex gap-1 items-center">
                   <img
                     className="w-10 h-10 object-contain"
-                    src="/lhdn.png"
+                    src="/berapa-calculator/lhdn.png"
                     alt=""
                   />
                   Monthly Tax Deduction (MTD / PCB)
