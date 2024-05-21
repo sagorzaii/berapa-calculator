@@ -5,8 +5,10 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Tax Calculator",
-  description: "Find out your taxes!",
+  title: "Berapa - Tax Calculator",
+  description: "tax calculation for Malaysian residents and non-residents",
+  keywords:
+    "tax, cukai, pcb, mtd, tax calculator, malaysia, resident, non-resident,",
 };
 
 export default function RootLayout({

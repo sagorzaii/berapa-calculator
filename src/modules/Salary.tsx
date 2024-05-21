@@ -51,7 +51,7 @@ const Salary = ({
     setUser({ ...user, [target.name]: Number(target.value) });
   };
 
-  const handleToggleClick = (e: React.MouseEvent<HTMLInputElement>) => {
+  const handleToggleClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
     switch (target?.name) {
       case "taxResident":
@@ -86,10 +86,9 @@ const Salary = ({
               <input
                 type="checkbox"
                 checked={user.taxResident}
-                defaultChecked
                 name="taxResident"
                 className="sr-only peer"
-                onClick={handleToggleClick}
+                onChange={handleToggleClick}
               />
               <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-sky-600"></div>
             </label>
@@ -104,7 +103,7 @@ const Salary = ({
                 checked={user.overSixty}
                 name="overSixty"
                 className="sr-only peer"
-                onClick={handleToggleClick}
+                onChange={handleToggleClick}
               />
               <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-sky-600"></div>
             </label>
@@ -119,7 +118,7 @@ const Salary = ({
                 checked={user.haveSpouse}
                 name="haveSpouse"
                 className="sr-only peer"
-                onClick={handleToggleClick}
+                onChange={handleToggleClick}
               />
               <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-sky-600"></div>
             </label>
@@ -134,7 +133,7 @@ const Salary = ({
                 checked={user.spouseHaveJob}
                 name="spouseHaveJob"
                 className="sr-only peer"
-                onClick={handleToggleClick}
+                onChange={handleToggleClick}
               />
               <div className="relative w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-sky-600"></div>
             </label>
@@ -150,9 +149,7 @@ const Salary = ({
               onChange={handleSelectChange}
               value={user.epfContribution}
             >
-              <option value="11" selected>
-                11%
-              </option>
+              <option value="11">11%</option>
               <option value="12">12%</option>
               <option value="13">13%</option>
               <option value="14">14%</option>
