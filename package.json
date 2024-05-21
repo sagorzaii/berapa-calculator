@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest",
-    "deploy": "gh-pages -d out"
+    "deploy": "gh-pages -d .next"
   },
   "dependencies": {
     "flowbite": "^2.3.0",
